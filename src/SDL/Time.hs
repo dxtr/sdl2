@@ -1,9 +1,10 @@
 {-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE OverloadedStrings  #-}
 module SDL.Time
   ( -- * Time Measurement
     ticks
+  , ticks64
   , time
 
     -- * Timer
@@ -15,23 +16,29 @@ module SDL.Time
   , removeTimer
   ) where
 
-import Control.Monad.IO.Class (MonadIO, liftIO)
-import Data.Data (Data)
-import Data.Typeable
-import Data.Word
-import Foreign
-import GHC.Generics (Generic)
+import           Control.Monad.IO.Class (MonadIO, liftIO)
+import           Data.Data              (Data)
+import           Data.Typeable
+import           Data.Word
+import           Foreign
+import           GHC.Generics           (Generic)
 
-import SDL.Internal.Exception
+import           SDL.Internal.Exception
 
-import qualified SDL.Raw.Timer as Raw
-import qualified SDL.Raw.Types as Raw
+import qualified SDL.Raw.Timer          as Raw
+import qualified SDL.Raw.Types          as Raw
 
 -- | Number of milliseconds since library initialization.
 --
 -- See @<https://wiki.libsdl.org/SDL_GetTicks SDL_GetTicks>@ for C documentation.
 ticks :: MonadIO m => m Word32
 ticks = Raw.getTicks
+
+-- | Number of milliseconds since library initialization.
+--
+-- See @<https://wiki.libsdl.org/SDL_GetTicks64 SDL_GetTicks64>@ for C documentation.
+ticks64 :: MonadIO m => m Word64
+ticks64 = Raw.getTicks64
 
 -- | The current time in seconds since some arbitrary starting point (consist over the life of the application).
 --
